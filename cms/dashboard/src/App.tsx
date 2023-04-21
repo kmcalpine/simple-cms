@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { AxiosInstanceProvider } from './context/Axios'
 import { Login } from './pages/auth/login/Login'
 
 function App() {
@@ -8,7 +9,13 @@ function App() {
 
   return (
     <div className="App">
-      <Login />
+      <AxiosInstanceProvider
+        config={{baseURL: "http://localhost:8002"}}
+        requestInterceptors={[]}
+        responseInterceptors={[]}
+      >
+        <Login />
+      </AxiosInstanceProvider>
     </div>
   )
 }

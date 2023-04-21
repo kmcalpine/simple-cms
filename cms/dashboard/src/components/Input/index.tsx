@@ -3,7 +3,9 @@ import { useState } from 'react'
 import React from 'react'
 
 interface IProps {
-    title: string
+    title: string,
+    value: string
+    handleInputChange: any
 }
 
 const InputWrapper = styled.div`
@@ -32,9 +34,7 @@ const StyledInput = styled.input`
     }
 `;
 
-export const Input = ({title}: IProps) => {
-
-    const [value, setValue] = useState('');
+export const Input = ({title, value, handleInputChange}: IProps) => {
 
     return (
         <InputWrapper>
@@ -44,9 +44,7 @@ export const Input = ({title}: IProps) => {
             </InputTitle>
             <StyledInput
                 value={value}
-                onChange={(event) => {
-                    setValue(event.target.value)
-                }}
+                onChange={handleInputChange}
             />
         </InputWrapper>
 
