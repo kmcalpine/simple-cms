@@ -1,23 +1,24 @@
-import { useState } from 'react'
-import './App.css'
-import { AxiosInstanceProvider } from './context/Axios'
-import { Login } from './pages/auth/login/Login'
+import { AxiosInstanceProvider } from "./context/Axios";
+import { Login } from "./pages/auth/login/Login";
+import { ThemeContext } from "./context/Theme";
+import { GlobalStyle } from "./styles/global";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const arr = [0,1,2,3]
-
-  return (
-    <div className="App">
-      <AxiosInstanceProvider
-        config={{baseURL: "http://localhost:8002"}}
-        requestInterceptors={[]}
-        responseInterceptors={[]}
-      >
-        <Login />
-      </AxiosInstanceProvider>
-    </div>
-  )
+    return (
+        <div className="App">
+            <ThemeContext>
+                <GlobalStyle />
+                <AxiosInstanceProvider
+                    config={{ baseURL: "http://localhost:8002" }}
+                    requestInterceptors={[]}
+                    responseInterceptors={[]}
+                >
+                    <Login />
+                </AxiosInstanceProvider>
+            </ThemeContext>
+        </div>
+    );
 }
 
-export default App
+export default App;

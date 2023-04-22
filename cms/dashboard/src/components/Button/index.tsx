@@ -3,6 +3,7 @@ import styled from "styled-components"
 interface IProps {
     text: string
     type?: "button" | "submit" | "reset" | undefined
+    loading?: boolean
 }
 
 const StyledButton = styled.button`
@@ -10,6 +11,7 @@ const StyledButton = styled.button`
     border: none;
     cursor: pointer;
     padding: 14px;
+    width: 100%;
     &:focus {
         outline: none;
     }
@@ -21,12 +23,13 @@ const StyledButton = styled.button`
 const Text = styled.span`
     color: black;
     font-size: 14px;
+    font-weight: bold;
 `
 
-export const Button = ({text, type}: IProps) => {
+export const Button = ({text, type, loading = false}: IProps) => {
     return (
         <StyledButton type={type}>
-            <Text>{text}</Text>
+            {loading ? 'loading' : <Text>{text}</Text>}
         </StyledButton>
     )
 }

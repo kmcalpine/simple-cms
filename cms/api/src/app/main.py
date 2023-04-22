@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
+import time
 
 app = FastAPI()
 app.add_middleware(
@@ -12,4 +13,5 @@ app.add_middleware(
 @app.post("/ping")
 def pong(payload: dict = Body(...)):
     print(payload)
+    time.sleep(3)
     return {"ping": "pong!"}
