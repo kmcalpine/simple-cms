@@ -14,6 +14,7 @@ export const useThemeMode = () => {
     useEffect(() => {
         const localTheme = window.localStorage.getItem("theme");
         localTheme && setTheme(localTheme);
+        !localTheme && setMode("dark");
         const html = document.querySelector("html");
         localTheme && html!.setAttribute("data-theme", localTheme);
 

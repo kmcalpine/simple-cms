@@ -1,10 +1,12 @@
 import { AxiosInstanceProvider } from "./context/Axios";
-import { Login } from "./pages/auth/login/Login";
 import { GlobalStyle } from "./styles/global";
 import { ThemeProps, darkTheme, lightTheme } from "./styles/themes";
 import { ThemeProvider } from "styled-components";
 import { createContext } from "react";
 import { useThemeMode } from "./hooks/useThemeMode";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./routes/Routes";
+import { UserProvider } from "./context/User";
 
 interface ThemesMap {
     [theme: string]: ThemeProps;
@@ -30,7 +32,11 @@ function App() {
                         requestInterceptors={[]}
                         responseInterceptors={[]}
                     >
-                        <Login />
+                        <BrowserRouter>
+                            <UserProvider>
+                                <AppRoutes />
+                            </UserProvider>
+                        </BrowserRouter>
                     </AxiosInstanceProvider>
                 </ThemePreferenceContext.Provider>
             </ThemeProvider>

@@ -28,7 +28,7 @@ const StyledInput = styled.input`
     border: solid 1px #3c3c3c;
     font-size: calc(20px * 0.75);
     line-height: 20px;
-    color: #a8a8a8;
+    color: var(--theme-elevation-800);
     height: 50px;
     padding: 0 14px 0 14px;
     &:focus {
