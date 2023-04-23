@@ -5,31 +5,30 @@ import { SideNav } from "../components/SideNav";
 const StyledDashboard = styled.div`
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: row;
 `;
 
-export const Store = () => {
-    return <div>this is a store</div>;
-};
-
-export const Test = () => {
-    return <div>this is a test</div>;
-};
+const ContentWrapper = styled.div`
+    height: 100%;
+    display: flex;
+`;
 
 const DashboardContent = ({ Component }: { Component: FunctionComponent }) => {
     return <Component />;
 };
 
 export const Dashboard = () => {
-    const [component, _setComponent] = useState(Store);
+    const [component, _setComponent] = useState(() => <></>);
     const setComponent = (newComponent: any) => {
         _setComponent(newComponent);
     };
     return (
         <StyledDashboard>
-            <SideNav handleClick={setComponent} />
-            <DashboardContent Component={() => component}></DashboardContent>
+            <ContentWrapper>
+                <SideNav handleClick={setComponent} />
+                <DashboardContent
+                    Component={() => component}
+                ></DashboardContent>
+            </ContentWrapper>
         </StyledDashboard>
     );
 };

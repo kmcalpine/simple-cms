@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import styled from "styled-components";
-import { Store, Test } from "../../pages/Dashboard";
+import { Store } from "../../pages/Store";
+import { Test } from "../../pages/Test";
 
 const Logo = styled.div`
     display: flex;
@@ -23,7 +24,7 @@ const StyledSideNav = styled.div`
     width: 200px;
     height: 100%;
     background-color: var(--theme-elevation-0);
-    border-right: 1px solid var(--theme-elevation-50);
+    border-right: 1px solid var(--theme-elevation-100);
 `;
 
 const SideNavContent = styled.div`
