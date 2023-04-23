@@ -1,5 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 export const DefaultUserContext = {
     loggedIn: false,
@@ -16,7 +15,9 @@ export const UserProvider = ({ children }: { children?: ReactNode }) => {
     };
 
     const login = () => {
-        setLoggedIn(true);
+        setTimeout(() => {
+            setLoggedIn(true);
+        }, 3000);
     };
     const logout = () => setLoggedIn(false);
 

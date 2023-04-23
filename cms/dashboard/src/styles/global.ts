@@ -43,7 +43,6 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .App {
-        padding: 40px;
         width: 100%;
     }
 `;

@@ -5,7 +5,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { useAxios } from "../../../hooks/useAxios";
 import { device } from "../../../utils/breakpoints";
 import { ThemePreferenceContext, themesMap } from "../../../App";
-import { Public } from "../../public";
 import { UserContext } from "../../../context/User";
 
 interface FormData {
@@ -25,6 +24,7 @@ const Form = styled.form`
     max-width: 500px;
     margin-top: auto;
     margin-bottom: auto;
+    padding: 40px;
     & :nth-child(4) {
         margin-top: 20px;
         height: 50x;
@@ -42,7 +42,7 @@ export function Login() {
     // useeffect on get reqs
     const { data, error, loading, processRequest } = useAxios();
     const { theme, themeToggle } = useContext(ThemePreferenceContext);
-    const { loggedIn, login, logout } = useContext(UserContext);
+    const { login, logout } = useContext(UserContext);
 
     const submitForm = () => {
         console.log(formData);
@@ -56,38 +56,36 @@ export function Login() {
     });
 
     return (
-        <Public>
-            <Form
-                onSubmit={(e: React.SyntheticEvent) => {
-                    e.preventDefault();
-                    submitForm();
+        <Form
+            onSubmit={(e: React.SyntheticEvent) => {
+                e.preventDefault();
+                submitForm();
+            }}
+        >
+            <Title>Login</Title>
+            <Input
+                title="Email"
+                value={formData.email}
+                type="text"
+                handleInputChange={(e: React.SyntheticEvent) => {
+                    setFormData({
+                        ...formData,
+                        email: (e.target as HTMLInputElement).value
+                    });
                 }}
-            >
-                <Title>Login</Title>
-                <Input
-                    title="Email"
-                    value={formData.email}
-                    type="text"
-                    handleInputChange={(e: React.SyntheticEvent) => {
-                        setFormData({
-                            ...formData,
-                            email: (e.target as HTMLInputElement).value
-                        });
-                    }}
-                />
-                <Input
-                    title="Password"
-                    value={formData.password}
-                    type="password"
-                    handleInputChange={(e: React.SyntheticEvent) => {
-                        setFormData({
-                            ...formData,
-                            password: (e.target as HTMLInputElement).value
-                        });
-                    }}
-                />
-                <Button text="LOG IN" type="submit" loading={loading} />
-            </Form>
-        </Public>
+            />
+            <Input
+                title="Password"
+                value={formData.password}
+                type="password"
+                handleInputChange={(e: React.SyntheticEvent) => {
+                    setFormData({
+                        ...formData,
+                        password: (e.target as HTMLInputElement).value
+                    });
+                }}
+            />
+            <Button text="LOG IN" type="submit" loading={loading} />
+        </Form>
     );
 }
