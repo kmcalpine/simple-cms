@@ -14,7 +14,14 @@ export const useThemeMode = () => {
     useEffect(() => {
         const localTheme = window.localStorage.getItem("theme");
         localTheme && setTheme(localTheme);
-    }, []);
+        const html = document.querySelector("html");
+        localTheme && html!.setAttribute("data-theme", localTheme);
+
+        return () => {
+            const html = document.querySelector("html");
+            html?.removeAttribute("data-theme");
+        };
+    }, [theme]);
 
     return { theme, themeToggle };
 };

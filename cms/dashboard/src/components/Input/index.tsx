@@ -17,14 +17,14 @@ const InputWrapper = styled.div`
 `;
 
 const InputTitle = styled.div`
-    color: #a8a8a8;
+    color: var(--theme-elevation-800);
     font-size: 14px;
     margin-bottom: 10px;
 `;
 
 const StyledInput = styled.input`
     border: none;
-    background-color: transparent;
+    background-color: var(--theme-input-bg);
     border: solid 1px #3c3c3c;
     font-size: calc(20px * 0.75);
     line-height: 20px;
@@ -36,6 +36,14 @@ const StyledInput = styled.input`
     }
     &:hover {
         border: solid 1px #5c5c5c;
+    }
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        -webkit-transition-delay: 9999s;
+        -webkit-font-size: 15px;
     }
 `;
 

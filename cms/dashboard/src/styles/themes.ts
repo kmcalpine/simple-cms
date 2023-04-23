@@ -1,14 +1,17 @@
 export interface ThemeProps {
     background: string;
     text: string;
+    inputBackground: string;
 }
 
 export const lightTheme: ThemeProps = {
-    background: "var(--light-background)",
-    text: "var(--light-text)"
+    background: "var(--theme-bg)",
+    text: "var(--light-text)",
+    inputBackground: "var(--light-input-background)"
 };
 
 export const darkTheme: ThemeProps = {
-    background: "var(--dark-background)",
-    text: "var(--dark-text)"
+    background: "var(--theme-bg)",
+    text: "var(--dark-text)",
+    inputBackground: "var(--dark-input-background)"
 };

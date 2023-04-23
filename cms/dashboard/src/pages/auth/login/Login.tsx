@@ -1,9 +1,10 @@
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
 import styled from "styled-components";
-import React, { useState, useMemo } from "react";
+import React, { useState, useContext } from "react";
 import { useAxios } from "../../../hooks/useAxios";
 import { device } from "../../../utils/breakpoints";
+import { ThemePreferenceContext, themesMap } from "../../../App";
 
 interface FormData {
     email: string;
@@ -11,7 +12,7 @@ interface FormData {
 }
 
 const Title = styled.div`
-    color: white;
+    color: var(--theme-elevation-1000);
     font-size: 40px;
     margin-bottom: 40px;
     font-weight: bold;
@@ -37,9 +38,12 @@ const Form = styled.form`
 export function Login() {
     // useeffect on get reqs
     const { data, error, loading, processRequest } = useAxios();
+    const { theme, themeToggle } = useContext(ThemePreferenceContext);
+
     const submitForm = () => {
         console.log(formData);
         processRequest("/ping", "POST", formData);
+        themeToggle(theme);
     };
 
     const [formData, setFormData] = useState<FormData>({
