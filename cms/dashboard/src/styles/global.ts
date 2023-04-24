@@ -2,10 +2,17 @@ import { createGlobalStyle, withTheme } from "styled-components";
 import { ThemeProps } from "./themes";
 import "./fonts.css";
 import "./colors.css";
+import styled from "styled-components";
 
 type GlobalThemeProps = {
     theme: ThemeProps;
 };
+
+export const StyledTitle = styled.div`
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--theme-elevation-1000);
+`;
 
 export const GlobalStyle = createGlobalStyle`
     :root {

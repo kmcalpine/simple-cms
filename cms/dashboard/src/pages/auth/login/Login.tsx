@@ -41,11 +41,9 @@ const Form = styled.form`
 export function Login() {
     // useeffect on get reqs
     const { data, error, loading, processRequest } = useAxios();
-    const { theme, themeToggle } = useContext(ThemePreferenceContext);
     const { login, logout } = useContext(UserContext);
 
     const submitForm = () => {
-        console.log(formData);
         processRequest("/ping", "POST", formData);
         login();
     };

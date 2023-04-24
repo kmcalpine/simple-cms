@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import time
+from .api import api_router
 
 app = FastAPI()
 app.add_middleware(
@@ -10,8 +10,5 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.post("/ping")
-def pong(payload: dict = Body(...)):
-    print(payload)
-    time.sleep(3)
-    return {"ping": "pong!"}
+
+app.include_router(api_router)

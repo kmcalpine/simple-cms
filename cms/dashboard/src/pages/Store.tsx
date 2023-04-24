@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledTitle } from "../styles/global";
 
 const StyledStore = styled.div`
     display: flex;
@@ -6,19 +7,21 @@ const StyledStore = styled.div`
     height: 100%;
     background-color: var(--theme-elevation-0);
     color: var(--theme-elevation-1000);
+    padding: 40px 0 40px 0;
 `;
 
 const StoreContent = styled.div`
     display: flex;
     width: 100%;
     background-color: transparent;
-    margin: 40px;
 `;
 
 export const Store = () => {
     return (
         <StyledStore>
-            <StoreContent></StoreContent>
+            <StoreContent>
+                <StyledTitle>Store</StyledTitle>
+            </StoreContent>
         </StyledStore>
     );
 };

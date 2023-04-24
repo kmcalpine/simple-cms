@@ -21,7 +21,7 @@ const LogoText = styled.div`
 
 const StyledSideNav = styled.div`
     display: flex;
-    width: 200px;
+    width: 220px;
     height: 100%;
     background-color: var(--theme-elevation-0);
     border-right: 1px solid var(--theme-elevation-100);
