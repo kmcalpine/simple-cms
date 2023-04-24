@@ -9,6 +9,7 @@ typing
 python-jose[cryptography]
 pydantic==1.10.7
 pydantic[email]
+sqlalchemy_utils
 
 # dev
 pytest==7.2.0

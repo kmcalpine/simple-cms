@@ -5,7 +5,8 @@ import bcrypt
 from sqlalchemy import DateTime, Column, String, LargeBinary, Integer, Boolean
 from datetime import datetime, timedelta
 from jose import jwt
-
+from app.database.db import Base
+from app.models import CustomBase
 
 def hash_password(password: str):
     pw = bytes(password, "utf-8")
@@ -13,7 +14,7 @@ def hash_password(password: str):
     return bcrypt.hashpw(pw, salt)
 
 
-class UserBase(BaseModel):
+class UserBase(CustomBase):
     email: EmailStr
 
     @validator("email")
@@ -38,13 +39,14 @@ class UserRegister(UserLogin):
     def password_required(cls, v):
         return hash_password(v)
 
-class UserLoginResponse(BaseModel):
+class UserLoginResponse(CustomBase):
     token: Optional[str] = Field(None, nullable=True)
 
-class UserRegisterResponse(BaseModel):
+class UserRegisterResponse(CustomBase):
     token: Optional[str] = Field(None, nullable=True)
 
-class User():
+class User(Base):
+    __table_args__ = {"schema": "mylittledinkers"}
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     password = Column(LargeBinary, nullable=False)
