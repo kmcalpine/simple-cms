@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import Field, BaseModel, validator
+from pydantic import Field, validator
 from pydantic.networks import EmailStr
 import bcrypt
 from sqlalchemy import DateTime, Column, String, LargeBinary, Integer, Boolean
@@ -7,12 +7,12 @@ from datetime import datetime, timedelta
 from jose import jwt
 from app.database.db import Base
 from app.models import CustomBase
+from app.config import JWT_SECRET
 
 def hash_password(password: str):
     pw = bytes(password, "utf-8")
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(pw, salt)
-
 
 class UserBase(CustomBase):
     email: EmailStr
@@ -40,7 +40,7 @@ class UserRegister(UserLogin):
         return hash_password(v)
 
 class UserLoginResponse(CustomBase):
-    token: Optional[str] = Field(None, nullable=True)
+    result: Optional[str] = Field(None, nullable=True)
 
 class UserRegisterResponse(CustomBase):
     token: Optional[str] = Field(None, nullable=True)
@@ -62,4 +62,5 @@ class User(Base):
             "exp": exp,
             "email": self.email
         }
-        return jwt.encode(data, "SECRET", algorithm="HS256")
+        encoded_token = jwt.encode(data, JWT_SECRET, algorithm="HS256")
+        return encoded_token

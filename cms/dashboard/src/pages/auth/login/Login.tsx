@@ -43,9 +43,10 @@ export function Login() {
     const { data, error, loading, processRequest } = useAxios();
     const { login, logout } = useContext(UserContext);
 
-    const submitForm = () => {
-        processRequest("/ping", "POST", formData);
+    const submitForm = async () => {
+        await processRequest("/auth/login", "POST", formData);
         login();
+        await processRequest("/auth/me", "GET", {});
     };
 
     const [formData, setFormData] = useState<FormData>({

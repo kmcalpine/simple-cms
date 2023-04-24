@@ -28,7 +28,10 @@ function App() {
                 <GlobalStyle />
                 <ThemePreferenceContext.Provider value={{ theme, themeToggle }}>
                     <AxiosInstanceProvider
-                        config={{ baseURL: "http://localhost:8002" }}
+                        config={{
+                            baseURL: "http://localhost:8002",
+                            withCredentials: true
+                        }}
                         requestInterceptors={[]}
                         responseInterceptors={[]}
                     >
