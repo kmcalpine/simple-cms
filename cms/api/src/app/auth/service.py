@@ -1,6 +1,7 @@
 from typing import Annotated, Optional
 from .models import User, UserRegister
 from starlette.requests import Request
+from fastapi import Cookie, Depends
 from starlette.status import HTTP_401_UNAUTHORIZED
 from fastapi.security.utils import get_authorization_scheme_param
 from jose import JWTError, jwt
@@ -23,16 +24,22 @@ def create(*, db_session, user_in: UserRegister) -> User:
     db_session.commit()
     return user
 
-def get_current_user(request: Request, **kwargs):
+def get(*, db_session, user_in) -> User:
+    user = get_by_email(db_session=db_session, email=user_in)
+    return user
 
-    token = request.cookies.get("mld-at")
-    print(token)
+def get_current_user(request: Request, mld_at: Optional[str] = Cookie(None)) -> User:
 
     try:
-        data = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        print(data)
+        data = jwt.decode(mld_at, JWT_SECRET, algorithms=["HS256"])
     except (JWTError) as e:
         raise HTTPException(
             status_code=HTTP_401_UNAUTHORIZED, detail=[{"msg": str(e)}]
         ) from None
-    return data["email"]
+    print(data)
+    return get(
+        db_session=request.state.db,
+        user_in=data["email"]
+    )
+
+CurrentUser = Annotated[User, Depends(get_current_user)]

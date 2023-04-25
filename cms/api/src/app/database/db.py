@@ -26,9 +26,12 @@ engine = create_engine(str(DATABASE_URL))
 
 SessionLocal = sessionmaker(bind=engine)
 
-def get_db():
+def get_db(request: Request):
+    return request.state.db
+    '''
     with Session(engine) as session:
         yield session
+    '''
 
 DbSession = Annotated[Session, Depends(get_db)]
 

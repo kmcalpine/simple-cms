@@ -6,7 +6,7 @@ from sqlalchemy import DateTime, Column, String, LargeBinary, Integer, Boolean
 from datetime import datetime, timedelta
 from jose import jwt
 from app.database.db import Base
-from app.models import CustomBase
+from app.models import CustomBase, PrimaryKey
 from app.config import JWT_SECRET
 
 def hash_password(password: str):
@@ -22,6 +22,9 @@ class UserBase(CustomBase):
         if not v:
             raise ValueError("Must not be empty string and must be an email")
         return v
+
+class UserRead(UserBase):
+    id: PrimaryKey
 
 class UserLogin(UserBase):
     password: str
