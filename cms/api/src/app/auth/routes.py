@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Response, Cookie
-from typing import Optional
+from typing import Annotated
 from .models import (
     UserLoginResponse,
     UserLogin,
@@ -7,7 +7,7 @@ from .models import (
     UserRegisterResponse,
     UserRead
 )
-from .service import get_by_email, create, CurrentUser
+from .service import get_by_email, create, CurrentUser, set_access_cookies
 from pydantic.error_wrappers import ValidationError, ErrorWrapper
 from app.database.db import DbSession
 from app.exceptions import InvalidPasswordError, InvalidUsernameError, InvalidConfigurationError
@@ -20,11 +20,12 @@ AUTH_REGISTRATION_ENABLED = True
 def me(current_user: CurrentUser):
     return current_user
 
+
 @auth_router.post("/login", response_model=UserLoginResponse)
-def login_user(user_in: UserLogin, db_session: DbSession, response: Response):
+def login_user(response: Response, user_in: UserLogin, db_session: DbSession):
     user = get_by_email(db_session=db_session, email=user_in.email)
     if user and user.check_password(user_in.password):
-        response.set_cookie(key="mld_at", value=user.token, httponly=True, secure=True)
+        set_access_cookies(response, user.token)
         return {"result": "success"}
 
     raise ValidationError(

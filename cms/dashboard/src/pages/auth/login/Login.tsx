@@ -46,7 +46,6 @@ export function Login() {
     const submitForm = async () => {
         await processRequest("/auth/login", "POST", formData);
         login();
-        await processRequest("/auth/me", "GET", {});
     };
 
     const [formData, setFormData] = useState<FormData>({

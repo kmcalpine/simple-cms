@@ -16,3 +16,5 @@ if TESTING:
 JWT_SECRET = config("JWT_SECRET", default="asdWSW345rEBSDg34dfwSFGG")
 JWT_ALG = config("JWT_ALG", default="HS256")
 JWT_EXP = config("JWT_EXP", cast=int, default=86400)
+
+CSRF_PROTECT = config("CSRF_PROTECT", default=True)

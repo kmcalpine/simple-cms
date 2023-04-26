@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { SideNav } from "../components/SideNav";
 import { Breadcrumbs } from "../components/Breadcrumbs";
+import { useAxios } from "../hooks/useAxios";
 
 const StyledDashboard = styled.div`
     height: 100%;
@@ -44,6 +45,17 @@ export const Dashboard = () => {
     const setComponent = (newComponent: any) => {
         _setComponent(newComponent);
     };
+
+    const { data, error, loading, processRequest } = useAxios();
+
+    const getMe = useCallback(async () => {
+        await processRequest("/auth/me", "GET", {});
+    }, []);
+
+    useEffect(() => {
+        getMe();
+    }, [getMe]);
+
     return (
         <StyledDashboard>
             <ContentWrapper>
