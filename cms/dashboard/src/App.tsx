@@ -27,14 +27,7 @@ function App() {
             <ThemeProvider theme={currentTheme}>
                 <GlobalStyle />
                 <ThemePreferenceContext.Provider value={{ theme, themeToggle }}>
-                    <AxiosInstanceProvider
-                        config={{
-                            baseURL: "http://localhost:8002",
-                            withCredentials: true
-                        }}
-                        requestInterceptors={[]}
-                        responseInterceptors={[]}
-                    >
+                    <AxiosInstanceProvider>
                         <BrowserRouter>
                             <UserProvider>
                                 <AppRoutes />

@@ -1,5 +1,5 @@
 from typing import Annotated, Optional
-from .models import User, UserRegister, UserBase, AccessTokens
+from .models import User, UserRegister, UserBase
 from starlette.requests import Request
 from fastapi import Cookie, Depends, Response, Header
 from starlette.status import HTTP_401_UNAUTHORIZED
@@ -37,9 +37,7 @@ def decode_token(*, access_token: str, csrf_token: Optional[str] = None):
             status_code=HTTP_401_UNAUTHORIZED, detail=[{"msg": str(e)}]
         ) from None
 
-    if CSRF_PROTECT:
-        if not csrf_token:
-            raise CSRFError("Missing CSRF token in header")
+    if csrf_token:
         if "csrf_token" not in data:
             raise CSRFError("Missing CSRF token")
         if not compare_digest(data["csrf_token"], csrf_token):
@@ -52,6 +50,10 @@ def get_encoded_token(
     mld_at: Annotated[str | None, Cookie()] = None,
     csrf_token: Annotated[str | None, Header(convert_underscores=False)] = None,
 ):
+    if CSRF_PROTECT:
+        if not csrf_token:
+            raise CSRFError("Missing CSRF token")
+
     return {"access_token": mld_at, "csrf_token": csrf_token}
 
 

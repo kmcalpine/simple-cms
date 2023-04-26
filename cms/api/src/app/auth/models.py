@@ -74,8 +74,3 @@ class User(Base):
         data = {"exp": exp, "email": self.email, "csrf_token": str(csrf_token)}
         access_token = jwt.encode(data, JWT_SECRET, algorithm="HS256")
         return access_token
-
-
-class AccessTokens:
-    access_token: str
-    csrf_token: Optional[str]

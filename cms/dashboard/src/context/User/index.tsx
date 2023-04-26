@@ -9,7 +9,7 @@ export const DefaultUserContext = {
 export const UserContext = createContext(DefaultUserContext);
 
 export const UserProvider = ({ children }: { children?: ReactNode }) => {
-    const [loggedIn, _setLoggedIn] = useState(true);
+    const [loggedIn, _setLoggedIn] = useState(false);
     const setLoggedIn = (val: boolean) => {
         return _setLoggedIn(val);
     };
