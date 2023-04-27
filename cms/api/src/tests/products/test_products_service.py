@@ -1,10 +1,9 @@
-def test_create(monkeypatch):
-    from app.products import service
+def test_create(session, user):
+    from app.products.service import create
 
-    def mock_create():
-        return 1
-
-    monkeypatch.setattr(service, "create", mock_create)
-    t_product = service.create()
-
+    t_product = create(db_session=session, current_user=user)
     assert t_product
+
+
+def test_get(session, product):
+    assert product

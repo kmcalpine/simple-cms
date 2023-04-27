@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from jose import jwt
 from app.database.db import Base
 from app.models import CustomBase, PrimaryKey
-from app.config import JWT_SECRET
+from app.config import JWT_SECRET, SCHEMA_NAME
 import uuid
 
 
@@ -58,7 +58,7 @@ class UserRegisterResponse(CustomBase):
 
 
 class User(Base):
-    __table_args__ = {"schema": "mylittledinkers"}
+    __table_args__ = {"schema": SCHEMA_NAME}
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     password = Column(LargeBinary, nullable=False)

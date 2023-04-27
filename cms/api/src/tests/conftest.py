@@ -12,7 +12,7 @@ from app.database.db import get_db, engine
 from app.database.manage import create_schema, create_tables, init_database
 from .db import Session
 
-from .factories import UserFactory
+from .factories import UserFactory, ProductFactory
 
 
 from app.config import DATABASE_URL
@@ -23,9 +23,10 @@ from app.main import app
 def test_db():
     if database_exists(str(DATABASE_URL)):
         drop_database(str(DATABASE_URL))
+
     init_database(engine=engine, url=str(DATABASE_URL))
     schema_engine = engine.execution_options(
-        schema_translate_map={"test_mylittledinkers": "mylittledinkers"}
+        schema_translate_map={"mylittledinkers": "test_mylittledinkers"}
     )
     Session.configure(bind=schema_engine)
     yield
@@ -49,3 +50,8 @@ def test_app():
 @pytest.fixture
 def user(session):
     return UserFactory()
+
+
+@pytest.fixture
+def product(session):
+    return ProductFactory()

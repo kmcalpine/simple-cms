@@ -1,8 +1,9 @@
-from factory import Sequence
+from factory import Sequence, SubFactory, RelatedFactory, Iterator, post_generation
 from factory.alchemy import SQLAlchemyModelFactory
 from .db import Session
 
 from app.auth.models import hash_password, User
+from app.products.models import Product
 
 
 class BaseFactory(SQLAlchemyModelFactory):
@@ -18,3 +19,10 @@ class UserFactory(BaseFactory):
 
     class Meta:
         model = User
+
+
+class ProductFactory(BaseFactory):
+    user = SubFactory(UserFactory)
+
+    class Meta:
+        model = Product
