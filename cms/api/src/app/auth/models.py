@@ -3,6 +3,7 @@ from pydantic import Field, validator
 from pydantic.networks import EmailStr
 import bcrypt
 from sqlalchemy import DateTime, Column, String, LargeBinary, Integer, Boolean
+from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
 from jose import jwt
 from app.database.db import Base
@@ -62,6 +63,8 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     password = Column(LargeBinary, nullable=False)
+
+    products = relationship("Product", back_populates="user")
 
     def check_password(self, password):
         return bcrypt.checkpw(password.encode("utf-8"), self.password)

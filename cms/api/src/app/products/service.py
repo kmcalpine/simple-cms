@@ -1,4 +1,5 @@
 from .models import Product, ProductCreate, ProductInfo
+from typing import List
 
 
 def create(*, db_session, product_in: ProductCreate, current_user) -> Product:
@@ -14,9 +15,21 @@ def create(*, db_session, product_in: ProductCreate, current_user) -> Product:
 
 
 def get(*, db_session, product_id, current_user) -> Product:
-    product = db_session.query(Product).filter(Product.id == product_id).one_or_none()
+    product = (
+        db_session.query(Product)
+        .filter(Product.id == product_id)
+        .filter(Product.user_id == current_user.id)
+    ).one_or_none()
 
     return product
+
+
+def get_all(*, db_session, current_user) -> List[Product]:
+    products = (
+        db_session.query(Product).filter(Product.user_id == current_user.id).all()
+    )
+
+    return products
 
 
 def update():

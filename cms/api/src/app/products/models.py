@@ -19,7 +19,7 @@ class Product(Base):
     __table_args__ = {"schema": SCHEMA_NAME}
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(f"{SCHEMA_NAME}.user.id"))
-    user = relationship("User", backref="product")
+    user = relationship("User", back_populates="products")
     info_id = Column(Integer, ForeignKey(f"{SCHEMA_NAME}.product_info.id"))
     info = relationship("ProductInfo", backref="product")
 

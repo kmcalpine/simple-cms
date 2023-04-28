@@ -23,4 +23,12 @@ def test_get(session, product):
 
 
 def test_get_all(session, user):
-    assert 1
+    from app.products.service import get_all
+    from tests.products.factory import ProductFactory
+
+    user.products = ProductFactory.create_batch(10, user=user)
+    assert user.products
+
+    t_products = get_all(db_session=session, current_user=user)
+    assert t_products
+    assert len(t_products) == len(user.products)
