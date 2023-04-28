@@ -43,6 +43,10 @@ class ProductBase(CustomBase):
 
 
 class ProductCreate(ProductBase):
-    name: str
-    description: str
     price: float
+
+
+class ProductUpdate(CustomBase):
+    name: Optional[str]
+    description: Optional[str]
+    price: Optional[float]

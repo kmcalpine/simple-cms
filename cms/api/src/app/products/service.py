@@ -1,4 +1,4 @@
-from .models import Product, ProductCreate, ProductInfo
+from .models import Product, ProductCreate, ProductInfo, ProductUpdate
 from typing import List
 
 
@@ -32,9 +32,17 @@ def get_all(*, db_session, current_user) -> List[Product]:
     return products
 
 
-def update():
-    return
+def update(*, db_session, product, product_in: ProductUpdate):
+    update_data = product_in.dict(exclude_unset=True)
+
+    for field in update_data.keys():
+        setattr(product, field, update_data[field])
+
+    db_session.commit()
+    return product
 
 
 def delete(*, db_session, product_id):
-    return
+    product = db_session.query(Product).filter(Product.id == product_id).first()
+    db_session.delete(product)
+    db_session.commit()
