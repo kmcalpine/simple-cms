@@ -14,10 +14,9 @@ from sqlalchemy import (
     create_engine,
 )
 
-from sqlalchemy.orm import object_session, sessionmaker, Session
+from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 
-from databases import Database
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 

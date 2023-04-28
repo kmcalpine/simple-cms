@@ -50,6 +50,7 @@ export const Dashboard = () => {
 
     const getMe = useCallback(async () => {
         await processRequest("/auth/me", "GET", {});
+        await processRequest("/product/", "POST", {});
     }, []);
 
     useEffect(() => {

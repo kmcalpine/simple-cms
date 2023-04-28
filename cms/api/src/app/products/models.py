@@ -20,8 +20,8 @@ class Product(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(f"{SCHEMA_NAME}.user.id"))
     user = relationship("User", backref="product")
-    # info = relationship("ProductInfo")
-    # images = relationship("ProductImages")
+    info_id = Column(Integer, ForeignKey(f"{SCHEMA_NAME}.product_info.id"))
+    info = relationship("ProductInfo", backref="product")
 
 
 class ProductCreateResponse(CustomBase):
@@ -31,19 +31,9 @@ class ProductCreateResponse(CustomBase):
 class ProductInfo(Base):
     __table_args__ = {"schema": SCHEMA_NAME}
     id = Column(Integer, primary_key=True)
-    product_id = Column(Integer, ForeignKey(f"{SCHEMA_NAME}.product.id"))
-    product = relationship("Product", backref="info")
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
     price = Column(DECIMAL, nullable=False)
-
-
-class ProductImages(Base):
-    __table_args__ = {"schema": SCHEMA_NAME}
-    id = Column(Integer, primary_key=True)
-    product_id = Column(Integer, ForeignKey(f"{SCHEMA_NAME}.product.id"))
-    product = relationship("Product", backref="images")
-    url = Column(String, nullable=False)
 
 
 class ProductBase(CustomBase):
@@ -53,4 +43,6 @@ class ProductBase(CustomBase):
 
 
 class ProductCreate(ProductBase):
-    user_id: int
+    name: str
+    description: str
+    price: float

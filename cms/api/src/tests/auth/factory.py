@@ -1,16 +1,11 @@
 from factory import Sequence, SubFactory, RelatedFactory, Iterator, post_generation
 from factory.alchemy import SQLAlchemyModelFactory
-from .db import Session
+from factory.fuzzy import FuzzyDecimal
+from tests.db import Session
+from tests.factory import BaseFactory
 
 from app.auth.models import hash_password, User
-from app.products.models import Product
-
-
-class BaseFactory(SQLAlchemyModelFactory):
-    class Meta:
-        abstract = True
-        sqlalchemy_session = Session
-        sqlalchemy_session_persistence = "commit"
+from app.products.models import Product, ProductInfo
 
 
 class UserFactory(BaseFactory):
@@ -19,10 +14,3 @@ class UserFactory(BaseFactory):
 
     class Meta:
         model = User
-
-
-class ProductFactory(BaseFactory):
-    user = SubFactory(UserFactory)
-
-    class Meta:
-        model = Product

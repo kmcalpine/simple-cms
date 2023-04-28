@@ -4,19 +4,18 @@ from starlette.config import environ
 environ["TESTING"] = "TRUE"
 
 
-from starlette.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy_utils import database_exists, create_database, drop_database
-from sqlalchemy.orm import scoped_session, sessionmaker
-from app.database.db import get_db, engine
-from app.database.manage import create_schema, create_tables, init_database
 from .db import Session
-
-from .factories import UserFactory, ProductFactory
-
-
-from app.config import DATABASE_URL
+from tests.auth.factory import UserFactory
+from tests.products.factory import (
+    ProductFactory,
+    ProductInfoFactory,
+)
+from app.config import DATABASE_URL, TESTING
+from app.database.db import engine
 from app.main import app
+from app.database.manage import init_database
+from sqlalchemy_utils import database_exists, drop_database
+from starlette.testclient import TestClient
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -25,8 +24,9 @@ def test_db():
         drop_database(str(DATABASE_URL))
 
     init_database(engine=engine, url=str(DATABASE_URL))
+    schema_translation = "test_mylittledinkers" if TESTING else "mylittledinkers"
     schema_engine = engine.execution_options(
-        schema_translate_map={"mylittledinkers": "test_mylittledinkers"}
+        schema_translate_map={"mylittledinkers": schema_translation}
     )
     Session.configure(bind=schema_engine)
     yield

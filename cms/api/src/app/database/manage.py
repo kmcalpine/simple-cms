@@ -1,11 +1,9 @@
 import os
 
-from app.config import SCHEMA_NAME
+from app.config import SCHEMA_NAME, TESTING
 from .db import Base, sessionmaker
 from sqlalchemy_utils import database_exists, create_database, drop_database
 from sqlalchemy.schema import CreateSchema
-
-print(SCHEMA_NAME)
 
 
 def get_core_tables():

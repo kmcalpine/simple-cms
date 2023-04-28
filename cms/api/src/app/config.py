@@ -20,7 +20,7 @@ if TESTING:
     SCHEMA_NAME = "test_mylittledinkers"
 
 
-JWT_SECRET = config("JWT_SECRET", default="asdWSW345rEBSDg34dfwSFGG")
+JWT_SECRET = config("JWT_SECRET", default="asdWSW345rEBSDg34dfwSFG5aadG")
 JWT_ALG = config("JWT_ALG", default="HS256")
 JWT_EXP = config("JWT_EXP", cast=int, default=86400)
 

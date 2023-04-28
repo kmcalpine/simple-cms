@@ -5,16 +5,21 @@ from .models import (
     UserLogin,
     UserRegister,
     UserRegisterResponse,
-    UserRead
+    UserRead,
 )
 from .service import get_by_email, create, CurrentUser, set_access_cookies
 from pydantic.error_wrappers import ValidationError, ErrorWrapper
 from app.database.db import DbSession
-from app.exceptions import InvalidPasswordError, InvalidUsernameError, InvalidConfigurationError
+from app.exceptions import (
+    InvalidPasswordError,
+    InvalidUsernameError,
+    InvalidConfigurationError,
+)
 
 auth_router = APIRouter()
 
 AUTH_REGISTRATION_ENABLED = True
+
 
 @auth_router.get("/me", response_model=UserRead)
 def me(current_user: CurrentUser):
@@ -42,21 +47,27 @@ def login_user(response: Response, user_in: UserLogin, db_session: DbSession):
         model=UserLogin,
     )
 
+
 def register_user(user_in: UserRegister, db_session: DbSession):
     user = get_by_email(db_session=db_session, email=user_in.email)
     if user:
         raise ValidationError(
             [
                 ErrorWrapper(
-                    InvalidConfigurationError(msg="A user with this email already exists."),
-                    loc="email"
+                    InvalidConfigurationError(
+                        msg="A user with this email already exists."
+                    ),
+                    loc="email",
                 )
             ],
-            model=UserRegister
+            model=UserRegister,
         )
 
     user = create(db_session=db_session, user_in=user_in)
     return user
 
+
 if AUTH_REGISTRATION_ENABLED:
-    register_user = auth_router.post("/register", response_model=UserRegisterResponse)(register_user)
+    register_user = auth_router.post("/register", response_model=UserRegisterResponse)(
+        register_user
+    )
