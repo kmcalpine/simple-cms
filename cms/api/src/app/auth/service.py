@@ -1,13 +1,15 @@
-from typing import Annotated, Optional
-from .models import User, UserRegister, UserBase
-from starlette.requests import Request
-from fastapi import Cookie, Depends, Response, Header
-from starlette.status import HTTP_401_UNAUTHORIZED
-from jose import JWTError, jwt
-from fastapi.exceptions import HTTPException
-from app.config import JWT_SECRET, CSRF_PROTECT
-from app.exceptions import CSRFError
 from hmac import compare_digest
+from typing import Annotated, Optional
+
+from app.config import CSRF_PROTECT, JWT_SECRET
+from app.exceptions import CSRFError
+from fastapi import Cookie, Depends, Header, Response
+from fastapi.exceptions import HTTPException
+from jose import JWTError, jwt
+from starlette.requests import Request
+from starlette.status import HTTP_401_UNAUTHORIZED
+
+from .models import User, UserBase, UserRegister
 
 
 def get_by_email(*, db_session, email: str):

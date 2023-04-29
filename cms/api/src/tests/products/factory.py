@@ -1,9 +1,24 @@
-from factory import Sequence, SubFactory, RelatedFactory
+from app.products.models import Product, ProductImages, ProductInfo, ProductTags
+from factory import RelatedFactory, RelatedFactoryList, Sequence, SubFactory
 from factory.fuzzy import FuzzyDecimal
-from tests.db import Session
 from tests.auth.factory import UserFactory
+from tests.db import Session
 from tests.factory import BaseFactory
-from app.products.models import Product, ProductInfo
+
+
+class ProductImagesFactory(BaseFactory):
+    tag = Sequence(lambda n: f"Tag {n}")
+    url = Sequence(lambda n: f"URL {n}")
+
+    class Meta:
+        model = ProductImages
+
+
+class ProductTagFactory(BaseFactory):
+    tag = Sequence(lambda n: f"Tag {n}")
+
+    class Meta:
+        model = ProductTags
 
 
 class ProductInfoFactory(BaseFactory):
@@ -17,7 +32,9 @@ class ProductInfoFactory(BaseFactory):
 
 class ProductFactory(BaseFactory):
     user = SubFactory(UserFactory)
-    info = SubFactory(ProductInfoFactory)
+    info = RelatedFactory(ProductInfoFactory)
+    images = RelatedFactoryList(ProductImagesFactory, "product", size=3)
+    tags = RelatedFactoryList(ProductTagFactory, "product", size=3)
 
     class Meta:
         model = Product

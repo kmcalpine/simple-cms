@@ -1,15 +1,17 @@
-from typing import Optional
-from pydantic import Field, validator
-from pydantic.networks import EmailStr
-import bcrypt
-from sqlalchemy import DateTime, Column, String, LargeBinary, Integer, Boolean
-from sqlalchemy.orm import relationship
+import uuid
 from datetime import datetime, timedelta
-from jose import jwt
+from typing import Optional
+
+import bcrypt
+from app.config import JWT_SECRET, SCHEMA_NAME
 from app.database.db import Base
 from app.models import CustomBase, PrimaryKey
-from app.config import JWT_SECRET, SCHEMA_NAME
-import uuid
+from app.products.models import Product
+from jose import jwt
+from pydantic import Field, validator
+from pydantic.networks import EmailStr
+from sqlalchemy import Boolean, Column, DateTime, Integer, LargeBinary, String
+from sqlalchemy.orm import relationship
 
 
 def hash_password(password: str):
@@ -64,7 +66,7 @@ class User(Base):
     email = Column(String, unique=True)
     password = Column(LargeBinary, nullable=False)
 
-    products = relationship("Product", back_populates="user")
+    products = relationship("Product", backref="user")
 
     def check_password(self, password):
         return bcrypt.checkpw(password.encode("utf-8"), self.password)

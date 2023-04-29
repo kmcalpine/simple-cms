@@ -4,18 +4,20 @@ from starlette.config import environ
 environ["TESTING"] = "TRUE"
 
 
-from .db import Session
+from app.config import DATABASE_URL, TESTING
+from app.database.db import engine
+from app.database.manage import init_database
+from app.main import app
+from sqlalchemy_utils import database_exists, drop_database
+from starlette.testclient import TestClient
 from tests.auth.factory import UserFactory
 from tests.products.factory import (
     ProductFactory,
-    ProductInfoFactory,
+    ProductImagesFactory,
+    ProductTagFactory,
 )
-from app.config import DATABASE_URL, TESTING
-from app.database.db import engine
-from app.main import app
-from app.database.manage import init_database
-from sqlalchemy_utils import database_exists, drop_database
-from starlette.testclient import TestClient
+
+from .db import Session
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -48,10 +50,20 @@ def test_app():
 
 
 @pytest.fixture
-def user(session):
+def user():
     return UserFactory()
 
 
 @pytest.fixture
-def product(session):
+def product():
     return ProductFactory()
+
+
+@pytest.fixture
+def images():
+    return ProductImagesFactory()
+
+
+@pytest.fixture
+def tags():
+    return ProductTagFactory()

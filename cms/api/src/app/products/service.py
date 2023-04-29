@@ -1,25 +1,52 @@
-from .models import Product, ProductCreate, ProductInfo, ProductUpdate
 from typing import List
+
+from .models import (
+    Product,
+    ProductCreate,
+    ProductInfo,
+    ProductImages,
+    ProductTags,
+    ProductUpdate,
+)
 
 
 def create(*, db_session, product_in: ProductCreate, current_user) -> Product:
-    product_info = ProductInfo(**product_in.dict())
+    product = Product(user_id=current_user.id)
+
+    db_session.add(product)
+    db_session.flush()
+
+    product_info = ProductInfo(
+        **product_in.dict(exclude={"images", "tags"}), product_id=product.id
+    )
+
     db_session.add(product_info)
     db_session.flush()
 
-    product = Product(user_id=current_user.id, info_id=product_info.id)
+    images = product_in.dict().get("images")
 
-    db_session.add(product)
+    for image in images:
+        product_image = ProductImages(**image, product_id=product.id)
+        db_session.add(product_image)
+        db_session.flush()
+
+    tags = product_in.dict().get("tags")
+
+    for tag in tags:
+        product_tag = ProductTags(**tag, product_id=product.id)
+        db_session.add(product_tag)
+        db_session.flush()
+
     db_session.commit()
     return product
 
 
-def get(*, db_session, product_id, current_user) -> Product:
+def get(*, db_session, product_id, user_id) -> Product:
     product = (
         db_session.query(Product)
         .filter(Product.id == product_id)
-        .filter(Product.user_id == current_user.id)
-    ).one_or_none()
+        .filter(Product.user_id == user_id)
+    ).first()
 
     return product
 
@@ -35,8 +62,8 @@ def get_all(*, db_session, current_user) -> List[Product]:
 def update(*, db_session, product, product_in: ProductUpdate):
     update_data = product_in.dict(exclude_unset=True)
 
-    for field in update_data.keys():
-        setattr(product, field, update_data[field])
+    for field, value in update_data.items():
+        setattr(product, field, value)
 
     db_session.commit()
     return product
