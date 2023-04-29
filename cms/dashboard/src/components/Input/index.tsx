@@ -4,8 +4,7 @@ import React from "react";
 
 interface IProps {
     title: string;
-    value: string;
-    handleInputChange: any;
+    path: string;
     type: string | undefined;
 }
 
@@ -47,18 +46,14 @@ const StyledInput = styled.input`
     }
 `;
 
-export const Input = ({ title, value, handleInputChange, type }: IProps) => {
+export const Input = ({ title, path, type }: IProps) => {
     return (
         <InputWrapper>
             <InputTitle>
                 {title}
                 <span style={{ color: "red" }}> *</span>
             </InputTitle>
-            <StyledInput
-                value={value}
-                onChange={handleInputChange}
-                type={type}
-            />
+            <StyledInput type={type} name={path} id={path} />
         </InputWrapper>
     );
 };

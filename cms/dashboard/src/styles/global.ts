@@ -51,6 +51,7 @@ export const GlobalStyle = createGlobalStyle`
 
     .App {
         width: 100%;
+        display: flex;
     }
 `;
 

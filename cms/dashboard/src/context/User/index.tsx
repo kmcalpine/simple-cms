@@ -15,9 +15,7 @@ export const UserProvider = ({ children }: { children?: ReactNode }) => {
     };
 
     const login = () => {
-        setTimeout(() => {
-            setLoggedIn(true);
-        }, 3000);
+        setLoggedIn(true);
     };
     const logout = () => setLoggedIn(false);
 

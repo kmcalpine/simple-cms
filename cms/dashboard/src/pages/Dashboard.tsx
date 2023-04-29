@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { SideNav } from "../components/SideNav";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { useAxios } from "../hooks/useAxios";
 
 const StyledDashboard = styled.div`
     height: 100%;
     width: 100%;
+    overflow: hidden;
 `;
 
 const NavWrapper = styled.div``;
@@ -22,50 +23,36 @@ const DashboardContentWrapper = styled.div`
     flex-grow: 1;
     padding: 25px;
     margin: 0 100px 0 100px;
+    height: 3000px;
+    overflow: scroll;
 `;
 
-const ComponentWrapper = styled.div`
+const DashboardWrapper = styled.div`
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 `;
 
-const DashboardContent = ({ Component }: { Component: FunctionComponent }) => {
-    return (
-        <DashboardContentWrapper>
-            <Breadcrumbs />
-            <ComponentWrapper>
-                <Component />
-            </ComponentWrapper>
-        </DashboardContentWrapper>
-    );
-};
+const DashboardContainer = styled.div`
+    width: 100%;
+    background-color: var(--theme-elevation-0);
+`;
 
 export const Dashboard = () => {
-    // update to base dashboard content for default component state
-    const [component, _setComponent] = useState(() => <></>);
-    const setComponent = (newComponent: any) => {
-        _setComponent(newComponent);
-    };
-
-    const { data, error, loading, processRequest } = useAxios();
-
-    const getMe = useCallback(async () => {
-        await processRequest("/auth/me", "GET", {});
-        await processRequest("/product/", "POST", {});
-    }, []);
-
-    useEffect(() => {
-        getMe();
-    }, [getMe]);
-
     return (
         <StyledDashboard>
             <ContentWrapper>
                 <NavWrapper>
-                    <SideNav handleClick={setComponent} />
+                    <SideNav />
                 </NavWrapper>
-                <DashboardContent
-                    Component={() => component}
-                ></DashboardContent>
+                <DashboardWrapper>
+                    <Breadcrumbs />
+                    <DashboardContainer>
+                        <Outlet />
+                    </DashboardContainer>
+                </DashboardWrapper>
             </ContentWrapper>
         </StyledDashboard>
     );

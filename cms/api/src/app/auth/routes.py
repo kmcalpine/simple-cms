@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Request, Response, Cookie
-from typing import Annotated
+from fastapi import APIRouter, Response
 from .models import (
     UserLoginResponse,
     UserLogin,
@@ -46,6 +45,8 @@ def login_user(response: Response, user_in: UserLogin, db_session: DbSession):
         ],
         model=UserLogin,
     )
+
+    return {"result": "failure"}
 
 
 def register_user(user_in: UserRegister, db_session: DbSession):

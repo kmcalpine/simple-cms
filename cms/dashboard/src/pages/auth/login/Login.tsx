@@ -1,11 +1,19 @@
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
 import styled from "styled-components";
-import React, { useState, useContext, useEffect } from "react";
+import React, {
+    useState,
+    useContext,
+    useEffect,
+    useCallback,
+    FormEventHandler
+} from "react";
 import { useAxios } from "../../../hooks/useAxios";
 import { device } from "../../../utils/breakpoints";
 import { ThemePreferenceContext, themesMap } from "../../../App";
 import { UserContext } from "../../../context/User";
+import { useAuth } from "../../../context/Auth";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
     email: string;
@@ -38,52 +46,40 @@ const Form = styled.form`
     }
 `;
 
-export function Login() {
-    // useeffect on get reqs
-    const { data, error, loading, processRequest } = useAxios();
-    const { login, logout } = useContext(UserContext);
+function LoginForm({ onSubmit, loading }: { onSubmit: any; loading: boolean }) {
+    function handleSubmit(e: React.SyntheticEvent) {
+        e.preventDefault();
 
-    const submitForm = async () => {
-        await processRequest("/auth/login", "POST", formData);
-        login();
-    };
-
-    const [formData, setFormData] = useState<FormData>({
-        email: "",
-        password: ""
-    });
-
+        const formData = new FormData(e.target as HTMLFormElement);
+        const formDetails = {
+            ...Object.fromEntries(formData)
+        };
+        onSubmit(formDetails);
+    }
     return (
-        <Form
-            onSubmit={(e: React.SyntheticEvent) => {
-                e.preventDefault();
-                submitForm();
-            }}
-        >
-            <Title>Login</Title>
-            <Input
-                title="Email"
-                value={formData.email}
-                type="text"
-                handleInputChange={(e: React.SyntheticEvent) => {
-                    setFormData({
-                        ...formData,
-                        email: (e.target as HTMLInputElement).value
-                    });
-                }}
-            />
-            <Input
-                title="Password"
-                value={formData.password}
-                type="password"
-                handleInputChange={(e: React.SyntheticEvent) => {
-                    setFormData({
-                        ...formData,
-                        password: (e.target as HTMLInputElement).value
-                    });
-                }}
-            />
-            <Button text="LOG IN" type="submit" loading={loading} />
+        <Form onSubmit={handleSubmit} method="POST">
+            <Input title="Email" path="email" type="text" />
+            <Input title="Password" path="password" type="password" />
+            <Button text="LOG IN" loading={loading} />
         </Form>
     );
+}
+
+export function Login() {
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const handleSubmit = useCallback(async (data: FormData) => {
+        setLoading(true);
+        try {
+            await login(data);
+            navigate("/");
+        } catch (err) {
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return <LoginForm onSubmit={handleSubmit} loading={loading} />;
 }

@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Store } from "../../pages/Store";
 import { Test } from "../../pages/Test";
+import { Link } from "react-router-dom";
 
 const Logo = styled.div`
     display: flex;
@@ -49,21 +50,17 @@ const SideNavMenuItem = styled.div`
     }
 `;
 
-export const SideNav = ({
-    handleClick
-}: {
-    handleClick: (component: FunctionComponent) => void;
-}) => {
+export const SideNav = () => {
     const sideNavMenuItems = [
         {
             id: 1,
             label: "Store",
-            Component: Store
+            path: "/store"
         },
         {
             id: 2,
             label: "Test",
-            Component: Test
+            path: "/test"
         }
     ];
 
@@ -76,15 +73,9 @@ export const SideNav = ({
                 <SideNavTitle>Content</SideNavTitle>
                 {sideNavMenuItems.map((item) => {
                     return (
-                        <SideNavMenuItem
-                            key={item.id}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleClick(item.Component);
-                            }}
-                        >
+                        <Link to={item.path} key={item.id}>
                             {item.label}
-                        </SideNavMenuItem>
+                        </Link>
                     );
                 })}
             </SideNavContent>

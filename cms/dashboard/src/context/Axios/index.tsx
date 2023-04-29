@@ -1,13 +1,16 @@
 import axios, { AxiosInstance } from "axios";
 import { createContext, useRef, ReactNode } from "react";
 import getCookie from "../../utils/getCookie";
+import { useAuth } from "../Auth";
 
-export const AxiosContext = createContext<AxiosInstance | null>(null);
+export const AxiosContext = createContext<AxiosInstance>({} as AxiosInstance);
 export const AxiosInstanceProvider = ({
     children
 }: {
     children: ReactNode;
 }) => {
+    const { authenticated } = useAuth();
+
     const instanceRef = useRef<AxiosInstance>(
         axios.create({
             baseURL: "http://localhost:8002",

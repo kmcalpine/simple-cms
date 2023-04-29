@@ -2,16 +2,19 @@ import styled from "styled-components";
 
 interface IProps {
     text: string;
-    type?: "button" | "submit" | "reset" | undefined;
     loading?: boolean;
 }
 
-const StyledButton = styled.button`
-    background-color: var(--theme-elevation-1000);
+const StyledButton = styled.button<{ $loading: boolean }>`
+    background-color: ${(props) =>
+        props.$loading
+            ? "var(--theme-elevation-800)"
+            : "var(--theme-elevation-1000)"};
     border: none;
-    cursor: pointer;
+    cursor: ${(props) => (props.$loading ? "auto" : "pointer")};
     padding: 14px;
     width: 100%;
+    height: 50px;
     &:focus {
         outline: none;
     }
@@ -26,9 +29,9 @@ const Text = styled.span`
     font-weight: bold;
 `;
 
-export const Button = ({ text, type, loading = false }: IProps) => {
+export const Button = ({ text, loading }: IProps) => {
     return (
-        <StyledButton type={type}>
+        <StyledButton $loading={loading}>
             {loading ? "loading" : <Text>{text}</Text>}
         </StyledButton>
     );

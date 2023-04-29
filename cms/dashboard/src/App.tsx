@@ -7,6 +7,7 @@ import { useThemeMode } from "./hooks/useThemeMode";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./routes/Routes";
 import { UserProvider } from "./context/User";
+import { AuthProvider } from "./context/Auth";
 
 interface ThemesMap {
     [theme: string]: ThemeProps;
@@ -28,11 +29,11 @@ function App() {
                 <GlobalStyle />
                 <ThemePreferenceContext.Provider value={{ theme, themeToggle }}>
                     <AxiosInstanceProvider>
-                        <BrowserRouter>
-                            <UserProvider>
+                        <AuthProvider>
+                            <BrowserRouter>
                                 <AppRoutes />
-                            </UserProvider>
-                        </BrowserRouter>
+                            </BrowserRouter>
+                        </AuthProvider>
                     </AxiosInstanceProvider>
                 </ThemePreferenceContext.Provider>
             </ThemeProvider>
