@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 const StyledBreadcrumbs = styled.div`
-    height: 60px;
+    height: 80px;
     width: 100%;
     display: flex;
-    background-color: transparent;
 `;
 
 const BreadcrumbContent = styled.div`

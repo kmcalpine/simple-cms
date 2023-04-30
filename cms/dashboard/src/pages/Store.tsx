@@ -5,9 +5,9 @@ const StyledStore = styled.div`
     display: flex;
     flex-grow: 1;
     height: 3000px;
-    background-color: var(--theme-elevation-0);
+    background-color: transparent;
     color: var(--theme-elevation-1000);
-    padding: 40px 0 40px 0;
+    padding: 40px 0;
 `;
 
 export const Store = () => {

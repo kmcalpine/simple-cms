@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { withLoggedIn, withLoggedOut } from "./withLoggedIn";
 import { Login } from "../pages/auth/login/Login";
-import { Dashboard } from "../pages/Dashboard";
+import { Dashboard } from "../pages/dashboard";
 import { Store } from "../pages/Store";
 import { Test } from "../pages/Test";
 

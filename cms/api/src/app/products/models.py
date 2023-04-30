@@ -25,6 +25,8 @@ class Product(Base):
     images = relationship("ProductImages", backref="product")
     tags = relationship("ProductTags", backref="product")
 
+    # add listing status
+
 
 class ProductCreateResponse(CustomBase):
     id: PrimaryKey

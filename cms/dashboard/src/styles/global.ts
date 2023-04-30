@@ -35,6 +35,8 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         margin: 0;
         height: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     html {
@@ -42,11 +44,16 @@ export const GlobalStyle = createGlobalStyle`
         height: 100%;
         background: var(--theme-bg);
 
+
         &[data-theme="dark"] {
             --theme-bg: var(--theme-elevation-0);
             --theme-text: var(--theme-elevation-1000);
             --theme-input-bg: var(--theme-elevation-50);
         }
+    }
+
+    li {
+
     }
 
     .App {
