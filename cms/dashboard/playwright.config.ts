@@ -10,17 +10,16 @@ import { defineConfig, devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-    testDir: "./src/tests",
-    testIgnore: "*int.spec.ts",
-
+    testDir: "./tests",
     testMatch: "*e2e.spec.ts",
     /* Run tests in files in parallel */
     fullyParallel: true,
-
+    /* Fail the build on CI if you accidentally left test.only in the source code. */
+    forbidOnly: !!process.env.CI,
     /* Retry on CI only */
-    retries: 2,
+    retries: process.env.CI ? 2 : 0,
     /* Opt out of parallel tests on CI. */
-    workers: 1,
+    workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: "html",
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -29,9 +28,7 @@ export default defineConfig({
         // baseURL: 'http://127.0.0.1:3000',
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-        trace: "on-first-retry",
-        video: "retain-on-failure",
-        screenshot: "only-on-failure"
+        trace: "on-first-retry"
     },
 
     /* Configure projects for major browsers */
@@ -39,6 +36,16 @@ export default defineConfig({
         {
             name: "chromium",
             use: { ...devices["Desktop Chrome"] }
+        },
+
+        {
+            name: "firefox",
+            use: { ...devices["Desktop Firefox"] }
+        },
+
+        {
+            name: "webkit",
+            use: { ...devices["Desktop Safari"] }
         }
 
         /* Test against mobile viewports. */

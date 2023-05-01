@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 import { login } from "../helpers";
-import wait from "../../utils/wait";
+import wait from "../../src/utils/wait";
 
 const { beforeAll, describe } = test;
 const url = "http://localhost:5173";
