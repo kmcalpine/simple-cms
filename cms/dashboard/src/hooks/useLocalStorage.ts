@@ -7,6 +7,7 @@ export const useLocalStorage = <T>(
     defaultValue: T
 ): [T, SetValue] => {
     const [storedValue, setStoredValue] = useState<T>(() => {
+        console.log(keyName);
         try {
             const value = window.localStorage.getItem(keyName);
             if (value) {
@@ -19,6 +20,7 @@ export const useLocalStorage = <T>(
                 return defaultValue;
             }
         } catch (err) {
+            window.localStorage.setItem(keyName, JSON.stringify(defaultValue));
             return defaultValue;
         }
     });

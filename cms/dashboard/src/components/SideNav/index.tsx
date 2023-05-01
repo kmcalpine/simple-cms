@@ -106,12 +106,10 @@ export const SideNav = () => {
                 </Logo>
                 <SideNavTitle>Content</SideNavTitle>
                 <UL>
-                    {sideNavMenuItems.map((item) => {
+                    {sideNavMenuItems.map((item, index) => {
                         return (
-                            <li>
-                                <LinkItem to={item.path} key={item.id}>
-                                    {item.label}
-                                </LinkItem>
+                            <li key={index}>
+                                <LinkItem to={item.path}>{item.label}</LinkItem>
                             </li>
                         );
                     })}

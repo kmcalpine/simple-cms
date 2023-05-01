@@ -31,7 +31,7 @@ const Text = styled.span`
 
 export const Button = ({ text, loading }: IProps) => {
     return (
-        <StyledButton $loading={loading}>
+        <StyledButton $loading={loading} type="submit">
             {loading ? "loading" : <Text>{text}</Text>}
         </StyledButton>
     );

@@ -41,7 +41,6 @@ class ExceptionMiddleware(BaseHTTPMiddleware):
                 content={"detail": e.errors()},
             )
         except ValueError as e:
-            print(2)
             response = JSONResponse(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 content={
@@ -51,7 +50,6 @@ class ExceptionMiddleware(BaseHTTPMiddleware):
                 },
             )
         except Exception as e:
-            print(3)
             response = JSONResponse(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 content={
@@ -60,7 +58,6 @@ class ExceptionMiddleware(BaseHTTPMiddleware):
                     ]
                 },
             )
-        print(response.headers)
         return response
 
 
@@ -68,7 +65,7 @@ app.add_middleware(ExceptionMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173"],
     allow_methods=["*"],
     allow_headers=["*"],
     allow_credentials=True,

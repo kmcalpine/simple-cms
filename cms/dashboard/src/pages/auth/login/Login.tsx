@@ -1,17 +1,9 @@
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
 import styled from "styled-components";
-import React, {
-    useState,
-    useContext,
-    useEffect,
-    useCallback,
-    FormEventHandler
-} from "react";
+import React, { useState, useCallback } from "react";
 import { useAxios } from "../../../hooks/useAxios";
 import { device } from "../../../utils/breakpoints";
-import { ThemePreferenceContext, themesMap } from "../../../App";
-import { UserContext } from "../../../context/User";
 import { useAuth } from "../../../context/Auth";
 import { useNavigate } from "react-router-dom";
 
