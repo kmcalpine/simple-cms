@@ -52,6 +52,10 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
+    textarea {
+        font-family: 'Poppins';
+    }
+
     li {
 
     }

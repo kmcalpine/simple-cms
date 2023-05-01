@@ -20,7 +20,26 @@ export const Products = () => {
                 description: "description",
                 price: 99.99
             },
-            images: [],
+            images: [
+                {
+                    url: "https://m.media-amazon.com/images/I/71+u7587bjL._AC_SL1500_.jpg",
+                    tag: "This is an image"
+                }
+            ],
+            tags: []
+        },
+        {
+            info: {
+                name: "Product",
+                description: "description",
+                price: 99.99
+            },
+            images: [
+                {
+                    url: "https://m.media-amazon.com/images/I/71+u7587bjL._AC_SL1500_.jpg",
+                    tag: "This is an image"
+                }
+            ],
             tags: []
         }
     ]);

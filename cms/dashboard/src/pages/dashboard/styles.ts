@@ -38,7 +38,6 @@ export const DashboardContentWrapper = styled.div`
     flex-grow: 1;
     padding: 25px;
     margin: 0 100px 0 100px;
-    height: 3000px;
     overflow: scroll;
 `;
 

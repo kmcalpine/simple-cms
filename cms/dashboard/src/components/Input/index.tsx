@@ -5,7 +5,8 @@ import React from "react";
 interface IProps {
     title: string;
     path: string;
-    type: string | undefined;
+    type: "password" | "text" | "textarea";
+    handleChange?: (e: any) => void;
 }
 
 const InputWrapper = styled.div`
@@ -21,12 +22,37 @@ const InputTitle = styled.div`
     margin-bottom: 10px;
 `;
 
-const StyledInput = styled.input`
+const StyledTextArea = styled.textarea`
+    display: flex;
     border: none;
     background-color: var(--theme-input-bg);
     border: solid 1px #3c3c3c;
     font-size: calc(20px * 0.75);
-    line-height: 20px;
+    color: var(--theme-elevation-800);
+    height: 15rem;
+    padding: 14px 14px 14px 14px;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        border: solid 1px #5c5c5c;
+    }
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+        -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+        -webkit-transition-delay: 9999s;
+        -webkit-font-size: 15px;
+    }
+`;
+
+const StyledInput = styled.input`
+    display: flex;
+    border: none;
+    background-color: var(--theme-input-bg);
+    border: solid 1px #3c3c3c;
+    font-size: calc(20px * 0.75);
     color: var(--theme-elevation-800);
     height: 50px;
     padding: 0 14px 0 14px;
@@ -46,14 +72,20 @@ const StyledInput = styled.input`
     }
 `;
 
-export const Input = ({ title, path, type }: IProps) => {
+export const Input = ({ title, path, type, handleChange }: IProps) => {
     return (
         <InputWrapper>
-            <InputTitle>
-                {title}
-                <span style={{ color: "red" }}> *</span>
-            </InputTitle>
-            <StyledInput type={type} name={path} id={path} />
+            <InputTitle>{title}</InputTitle>
+            {type === "textarea" ? (
+                <StyledTextArea name={path} id={path} />
+            ) : (
+                <StyledInput
+                    type={type}
+                    name={path}
+                    id={path}
+                    onChange={handleChange}
+                />
+            )}
         </InputWrapper>
     );
 };

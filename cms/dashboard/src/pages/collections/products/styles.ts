@@ -1,6 +1,9 @@
 import styled, { StyledComponent } from "styled-components";
 
-export const Layout = styled.div``;
+export const Layout = styled.div`
+    height: 100%;
+    width: 100%;
+`;
 export const Title = styled.h1`
     font-size: 3rem;
     color: var(--theme-elevation-1000);
@@ -27,5 +30,6 @@ export const Create = styled.a`
 `;
 export const ProductListContainer = styled.div`
     width: 100%;
-    height: 100%;
 `;
+
+export const Grid = styled.div``;
