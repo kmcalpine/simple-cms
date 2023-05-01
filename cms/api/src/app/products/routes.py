@@ -1,9 +1,8 @@
 from app.models import PrimaryKey
 from .models import Product, ProductCreate, ProductCreateResponse, ProductUpdate
-from .service import create
 from fastapi import APIRouter, HTTPException, Response, status
 from app.auth.service import CurrentUser
-from .service import get, update
+from .service import get, update, create, get_all
 from app.database.db import DbSession
 
 product_router = APIRouter()
@@ -13,7 +12,7 @@ product_router = APIRouter()
     "/",
 )
 def get_all_products(db_session: DbSession, current_user: CurrentUser):
-    return {"result": current_user}
+    return get_all(db_session=db_session, current_user=current_user)
 
 
 @product_router.post("/", response_model=ProductCreateResponse)

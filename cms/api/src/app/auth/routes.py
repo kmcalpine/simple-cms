@@ -35,7 +35,7 @@ def login_user(response: Response, user_in: UserLogin, db_session: DbSession):
     user = get_by_email(db_session=db_session, email=user_in.email)
     if user and user.check_password(user_in.password):
         set_access_cookies(response, user.token)
-        return {"result": "success"}
+    return {"result": "success"}
 
     raise ValidationError(
         [
@@ -50,8 +50,6 @@ def login_user(response: Response, user_in: UserLogin, db_session: DbSession):
         ],
         model=UserLogin,
     )
-
-    return {"result": "failure"}
 
 
 def register_user(user_in: UserRegister, db_session: DbSession):

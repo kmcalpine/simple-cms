@@ -41,6 +41,11 @@ def create(*, db_session, product_in: ProductCreate, current_user) -> Product:
     return product
 
 
+def get_all(*, db_session, user_id):
+    # products = db_session.query(Product).filter(Product.user_id == user_id).all()
+    return []
+
+
 def get(*, db_session, product_id, user_id) -> Product:
     product = (
         db_session.query(Product)
