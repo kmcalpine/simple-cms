@@ -1,6 +1,5 @@
 import { FunctionComponent, useContext } from "react";
 import { withCondition } from "./withCondition";
-import { UserContext } from "../context/User";
 import { useAuth } from "../context/Auth";
 
 export const withLoggedIn = (Component: FunctionComponent) => {

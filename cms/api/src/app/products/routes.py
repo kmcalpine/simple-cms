@@ -9,6 +9,13 @@ from app.database.db import DbSession
 product_router = APIRouter()
 
 
+@product_router.get(
+    "/",
+)
+def get_all_products(db_session: DbSession, current_user: CurrentUser):
+    return {"result": current_user}
+
+
 @product_router.post("/", response_model=ProductCreateResponse)
 def create_product(db_session: DbSession, current_user: CurrentUser):
     product = create(db_session=db_session, current_user=current_user)

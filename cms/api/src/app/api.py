@@ -8,7 +8,7 @@ authenticated_api_router = APIRouter()
 
 api_router.include_router(auth_router, prefix="/auth", tags=["auth"])
 authenticated_api_router.include_router(
-    product_router, prefix="/product", tags=["product"]
+    product_router, prefix="/products", tags=["products"]
 )
 
-api_router.include_router(authenticated_api_router, dependencies=[Depends(CurrentUser)])
+api_router.include_router(authenticated_api_router)

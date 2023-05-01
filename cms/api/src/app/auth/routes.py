@@ -25,6 +25,11 @@ def me(current_user: CurrentUser):
     return current_user
 
 
+@auth_router.post("/logout", response_model=UserLoginResponse)
+def logout_user():
+    return {"result": "success"}
+
+
 @auth_router.post("/login", response_model=UserLoginResponse)
 def login_user(response: Response, user_in: UserLogin, db_session: DbSession):
     user = get_by_email(db_session=db_session, email=user_in.email)

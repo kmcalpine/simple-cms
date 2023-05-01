@@ -13,7 +13,7 @@ from .models import User, UserBase, UserRegister
 
 
 def get_by_email(*, db_session, email: str):
-    return db_session.query(User).filter(User.email == email).one_or_none()
+    return db_session.query(User.id, User.email).filter(User.email == email).first()
 
 
 def create(*, db_session, user_in: UserRegister) -> User:

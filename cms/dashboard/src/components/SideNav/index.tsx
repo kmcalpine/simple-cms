@@ -1,9 +1,7 @@
-import { FunctionComponent } from "react";
 import styled from "styled-components";
-import { Store } from "../../pages/Store";
-import { Test } from "../../pages/Test";
 import { Link } from "react-router-dom";
 import { device } from "../../utils/breakpoints";
+import { useThemeMode } from "../../hooks/useThemeMode";
 
 const Logo = styled.div`
     display: flex;
@@ -73,16 +71,22 @@ const Svg = styled.svg`
 `;
 
 export const SideNav = () => {
+    const { themeToggle } = useThemeMode();
     const sideNavMenuItems = [
         {
             id: 1,
-            label: "Store",
-            path: "/store"
+            label: "Products",
+            path: "/products"
         },
         {
             id: 2,
             label: "Test",
             path: "/test"
+        },
+        {
+            id: 3,
+            label: "Logout",
+            path: "/logout"
         }
     ];
 
@@ -113,6 +117,16 @@ export const SideNav = () => {
                             </li>
                         );
                     })}
+                    <li>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                themeToggle();
+                            }}
+                        >
+                            THEME
+                        </button>
+                    </li>
                 </UL>
             </SideNavContent>
         </StyledSideNav>

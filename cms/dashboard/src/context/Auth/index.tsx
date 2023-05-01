@@ -28,30 +28,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         false
     );
 
-    const api = useContext(AxiosContext);
+    const { create } = useContext(AxiosContext);
 
     const login = useCallback<Login>(async (args) => {
         try {
-            await api
-                .request({
-                    method: "POST",
-                    data: {
-                        email: args.email,
-                        password: args.password
-                    },
-                    url: "/auth/login"
-                })
-                .then((res) => {
-                    if (res.status === 200) {
-                        setAuthenticated(true);
-                    }
-                });
+            const createArgs = {
+                data: { ...args },
+                slug: "auth/login"
+            };
+            await create(createArgs).then((res) => {
+                if (res.status === 200) {
+                    setAuthenticated(true);
+                }
+            });
         } catch (error) {
             console.log(error);
         }
     }, []);
 
-    const logout = useCallback<Logout>(async () => {}, []);
+    const logout = useCallback<Logout>(async () => {
+        try {
+            const createArgs = {
+                data: {},
+                slug: "auth/logout"
+            };
+            await create(createArgs).then((res) => {
+                if (res.status === 200) {
+                    setAuthenticated(false);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     return (
         <Context.Provider
