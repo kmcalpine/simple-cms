@@ -1,28 +1,20 @@
-import React, { useState } from "react";
-import {
-    TagTitle,
-    StyledTag,
-    TagText,
-    UL,
-    AddTag,
-    TagWrapper,
-    TagInput
-} from "./styles";
+import { useState } from "react";
+import { Input } from "../Input";
+import { StyledTag, TagText, UL, DelTagButton } from "./styles";
 import { useTagsContext } from "./Context";
+import { ITag } from "./Context";
 
-const TagItem = ({ tag }) => {
+const TagItem = ({ tag }: { tag: ITag }) => {
     const { delTag } = useTagsContext();
     return (
         <StyledTag>
             <TagText>{tag.title}</TagText>
-            <button
+            <DelTagButton
                 onClick={(e) => {
                     e.preventDefault();
                     delTag(tag.id);
                 }}
-            >
-                X
-            </button>
+            ></DelTagButton>
         </StyledTag>
     );
 };
@@ -30,48 +22,38 @@ const TagItem = ({ tag }) => {
 export const Tags = () => {
     const { tags, addTag } = useTagsContext();
     const [title, setTitle] = useState("");
-    const [message, setMessage] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (title.trim()) {
-            console.log("adding tag");
             addTag(title);
             setTitle("");
-            setMessage("");
-        } else {
-            setMessage("Enter a tag");
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         setTitle(e.target.value);
     };
 
     return (
         <>
-            <TagTitle>Tags</TagTitle>
-            <div>
-                <input
-                    placeholder="Enter a tag"
-                    value={title}
-                    onChange={handleChange}
-                />
-                <button
-                    onClick={(e) => {
-                        handleSubmit(e);
-                    }}
-                >
-                    Add
-                </button>
-            </div>
-            <TagWrapper>
-                <UL>
-                    {tags.map((tag) => (
-                        <TagItem key={tag.id} tag={tag} />
-                    ))}
-                </UL>
-            </TagWrapper>
+            <Input
+                path="tags"
+                title="Tags"
+                type="text"
+                handleChange={handleChange}
+            />
+            <button
+                style={{ visibility: "hidden", position: "fixed" }}
+                onClick={(e) => {
+                    handleSubmit(e);
+                }}
+            ></button>
+            <UL>
+                {tags.map((tag) => (
+                    <TagItem key={tag.id} tag={tag} />
+                ))}
+            </UL>
         </>
     );
 };

@@ -12,7 +12,7 @@ export const CreateProduct = () => {
             <TitleRow>
                 <Title>{title}</Title>
             </TitleRow>
-            <Form>
+            <Form method="POST">
                 <Input
                     title="Title"
                     path="title"
@@ -24,6 +24,7 @@ export const CreateProduct = () => {
                 <Input title="Description" path="description" type="textarea" />
                 <InputWrapper>
                     <Input title="Price" path="price" type="text" />
+                    <Input title="Quantiy" path="quantity" type="text" />
                 </InputWrapper>
                 <TagProvider>
                     <Tags />

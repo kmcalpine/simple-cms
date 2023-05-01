@@ -7,19 +7,19 @@ interface TagContext {
     delTag: (id: string) => void;
 }
 
-interface ITag {
+export interface ITag {
     id: string;
     title: string;
 }
 
 const TagsContext = createContext({} as TagContext);
 
-export const TagProvider = ({ children }) => {
+export const TagProvider = ({ children }: { children: any }) => {
     const [tags, setTags] = useState<any>([]);
 
     const handleChange = (id: string) => {
-        setTags((prevState) => {
-            prevState.map((tag) => {
+        setTags((prevState: any) => {
+            prevState.map((tag: ITag) => {
                 if (tag.id === id) {
                     return {
                         ...tag

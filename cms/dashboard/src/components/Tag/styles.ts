@@ -12,10 +12,9 @@ export const StyledTag = styled.div`
     font-weight: bold;
     color: var(--theme-elevation-1000);
     text-align: center;
-    &:hover {
-        cursor: pointer;
-    }
 `;
+
+export const Input = styled.input``;
 
 export const TagText = styled.span`
     margin: auto 0;
@@ -58,6 +57,20 @@ export const AddTag = styled.button`
     font-weight: bold;
     color: black;
 
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
+export const DelTagButton = styled.button`
+    margin: auto 0 auto 0.5rem;
+    background-color: var(--theme-error-500);
+    height: 1rem;
+    width: 1rem;
+    border-radius: 1rem;
+    outline: none;
+    border: none;
+    color: var(--theme-elevation-0);
     &:hover {
         cursor: pointer;
     }

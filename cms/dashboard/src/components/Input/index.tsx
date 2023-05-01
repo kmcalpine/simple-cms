@@ -73,6 +73,7 @@ const StyledInput = styled.input`
 `;
 
 export const Input = ({ title, path, type, handleChange }: IProps) => {
+    const [value, setValue] = useState("");
     return (
         <InputWrapper>
             <InputTitle>{title}</InputTitle>
@@ -80,10 +81,19 @@ export const Input = ({ title, path, type, handleChange }: IProps) => {
                 <StyledTextArea name={path} id={path} />
             ) : (
                 <StyledInput
+                    value={value}
                     type={type}
                     name={path}
                     id={path}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                        setValue(e.target.value);
+                        handleChange!(e);
+                    }}
+                    onKeyUp={(e) => {
+                        if (e.key === "Enter") {
+                            setValue("");
+                        }
+                    }}
                 />
             )}
         </InputWrapper>
