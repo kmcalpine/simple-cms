@@ -23,7 +23,7 @@ export const Tags = () => {
     const { tags, addTag } = useTagsContext();
     const [title, setTitle] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
         if (title.trim()) {
             addTag(title);

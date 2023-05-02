@@ -4,6 +4,7 @@ import { Input } from "../../../../components/Input";
 import { Tags } from "../../../../components/Tag";
 import { useState } from "react";
 import { TagProvider } from "../../../../components/Tag/Context";
+import { ImageUpload } from "../../../../components/ImageUpload";
 
 export const CreateProduct = () => {
     const [title, setTitle] = useState("[undefined]");
@@ -29,6 +30,7 @@ export const CreateProduct = () => {
                 <TagProvider>
                     <Tags />
                 </TagProvider>
+                <ImageUpload />
             </Form>
         </Layout>
     );

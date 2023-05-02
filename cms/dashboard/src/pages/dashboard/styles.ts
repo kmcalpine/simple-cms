@@ -22,6 +22,7 @@ export const NavWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
+    height: 100%;
     @media ${device.mobileS} {
         flex-direction: column;
     }
@@ -38,13 +39,11 @@ export const DashboardContentWrapper = styled.div`
     flex-grow: 1;
     padding: 25px;
     margin: 0 100px 0 100px;
-    overflow: scroll;
 `;
 
 export const DashboardWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
     height: 100%;
     overflow: auto;
 
@@ -53,6 +52,7 @@ export const DashboardWrapper = styled.div`
     }
     @media ${device.tablet} {
         padding: 0 5rem;
+        width: 100%;
     }
 `;
 
