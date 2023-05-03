@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 interface IProps {
-    title: string;
+    title?: string;
     path: string;
-    type: "password" | "text" | "textarea";
+    type: "password" | "text" | "textarea" | "file";
     handleChange?: (e: any) => void;
+    defaultValue?: string;
 }
 
 const InputWrapper = styled.div`
@@ -50,17 +51,19 @@ const StyledTextArea = styled.textarea`
 const StyledInput = styled.input`
     display: flex;
     border: none;
-    background-color: var(--theme-input-bg);
-    border: solid 1px #3c3c3c;
+    background-color: var(--theme-elevation-0);
+    border: solid 1px var(--theme-elevation-300);
     font-size: calc(20px * 0.75);
     color: var(--theme-elevation-800);
     height: 50px;
     padding: 0 14px 0 14px;
+    box-shadow: 0 2px 3px 0 rgba(0, 2, 4, 0.05),
+        0 10px 4px -8px rgba(0, 2, 4, 0.02);
     &:focus {
         outline: none;
     }
     &:hover {
-        border: solid 1px #5c5c5c;
+        border: solid 1px var(--theme-elevation-400);
     }
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
@@ -72,14 +75,27 @@ const StyledInput = styled.input`
     }
 `;
 
-export const Input = ({ title, path, type, handleChange }: IProps) => {
-    const [value, setValue] = useState("");
+export const Input = ({
+    title,
+    path,
+    type,
+    handleChange,
+    defaultValue
+}: IProps) => {
+    const [value, setValue] = useState<string>(() => {
+        return defaultValue || "";
+    });
+
+    useEffect(() => {
+        setValue(defaultValue || "");
+    }, [defaultValue]);
+
+    const textArea = type === "textarea";
     return (
         <InputWrapper>
-            <InputTitle>{title}</InputTitle>
-            {type === "textarea" ? (
-                <StyledTextArea name={path} id={path} />
-            ) : (
+            {title && <InputTitle>{title}</InputTitle>}
+            {textArea && <StyledTextArea name={path} id={path} />}
+            {!textArea && (
                 <StyledInput
                     value={value}
                     type={type}
@@ -90,6 +106,7 @@ export const Input = ({ title, path, type, handleChange }: IProps) => {
                         handleChange!(e);
                     }}
                     onKeyUp={(e) => {
+                        if (path === "image") return;
                         if (e.key === "Enter") {
                             setValue("");
                         }

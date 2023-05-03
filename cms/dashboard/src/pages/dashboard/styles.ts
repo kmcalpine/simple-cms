@@ -37,7 +37,6 @@ export const DashboardContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 25px;
     margin: 0 100px 0 100px;
 `;
 
@@ -48,10 +47,8 @@ export const DashboardWrapper = styled.div`
     overflow: auto;
 
     @media ${device.mobileS} {
-        padding: 0 1.5rem;
     }
     @media ${device.tablet} {
-        padding: 0 5rem;
         width: 100%;
     }
 `;

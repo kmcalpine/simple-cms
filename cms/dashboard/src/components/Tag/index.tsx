@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { Input } from "../Input";
 import { StyledTag, TagText, UL, DelTagButton } from "./styles";
 import { useTagsContext } from "./Context";
@@ -8,7 +8,7 @@ const TagItem = ({ tag }: { tag: ITag }) => {
     const { delTag } = useTagsContext();
     return (
         <StyledTag>
-            <TagText>{tag.title}</TagText>
+            <TagText>{tag.tag}</TagText>
             <DelTagButton
                 onClick={(e) => {
                     e.preventDefault();
@@ -19,9 +19,17 @@ const TagItem = ({ tag }: { tag: ITag }) => {
     );
 };
 
-export const Tags = () => {
+export const Tags = ({
+    setFormTags
+}: {
+    setFormTags: Dispatch<SetStateAction<ITag[]>>;
+}) => {
     const { tags, addTag } = useTagsContext();
     const [title, setTitle] = useState("");
+
+    useEffect(() => {
+        setFormTags(tags);
+    }, [tags]);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();

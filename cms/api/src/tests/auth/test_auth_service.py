@@ -20,4 +20,4 @@ def test_decode(user):
 
     t_token = decode_token(access_token=user.token)
     assert t_token
-    assert {"exp", "email", "csrf_token"} <= t_token.keys()
+    assert {"exp", "email"} <= t_token.keys()

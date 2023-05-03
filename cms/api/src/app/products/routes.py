@@ -1,23 +1,32 @@
 from app.models import PrimaryKey
-from .models import Product, ProductCreate, ProductCreateResponse, ProductUpdate
-from fastapi import APIRouter, HTTPException, Response, status
+from .models import (
+    Product,
+    ProductCreate,
+    ProductCreateResponse,
+    ProductUpdate,
+    ProductResponse,
+)
+from fastapi import APIRouter, HTTPException, Response, status, Request
 from app.auth.service import CurrentUser
 from .service import get, update, create, get_all
 from app.database.db import DbSession
+from typing import List
 
 product_router = APIRouter()
 
 
-@product_router.get(
-    "/",
-)
+@product_router.get("/", response_model=List[ProductResponse])
 def get_all_products(db_session: DbSession, current_user: CurrentUser):
     return get_all(db_session=db_session, current_user=current_user)
 
 
 @product_router.post("/", response_model=ProductCreateResponse)
-def create_product(db_session: DbSession, current_user: CurrentUser):
-    product = create(db_session=db_session, current_user=current_user)
+def create_product(
+    db_session: DbSession, product_in: ProductCreate, current_user: CurrentUser
+):
+    product = create(
+        db_session=db_session, product_in=product_in, current_user=current_user
+    )
     return product
 
 

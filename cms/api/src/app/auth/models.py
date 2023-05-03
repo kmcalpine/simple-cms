@@ -1,4 +1,3 @@
-import uuid
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -53,7 +52,7 @@ class UserRegister(UserLogin):
 
 
 class UserLoginResponse(CustomBase):
-    result: Optional[str] = Field(None, nullable=True)
+    token: Optional[str] = Field(None, nullable=True)
 
 
 class UserRegisterResponse(CustomBase):
@@ -75,7 +74,7 @@ class User(Base):
     def token(self):
         now = datetime.utcnow()
         exp = now + timedelta(seconds=86400)
-        csrf_token = uuid.uuid4()
-        data = {"exp": exp, "email": self.email, "csrf_token": str(csrf_token)}
+        data = {"exp": exp, "email": self.email}
         access_token = jwt.encode(data, JWT_SECRET, algorithm="HS256")
+        print(jwt.decode(access_token, JWT_SECRET, algorithms=["HS256"]))
         return access_token

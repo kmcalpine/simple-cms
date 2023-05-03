@@ -1,26 +1,14 @@
-import axios, { AxiosInstance } from "axios";
-import { createContext, useRef, ReactNode, MutableRefObject } from "react";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { createContext, useRef, ReactNode } from "react";
 import getCookie from "../../utils/getCookie";
-import { useAuth } from "../Auth";
+import {
+    Request,
+    Response,
+    CreateArgs,
+    IAxiosContext
+} from "../../types/api.ts";
 
-type CreateArgs<T> = {
-    slug: string;
-    data?: T;
-};
-
-type Request = <T>(args?: CreateArgs<T>) => Promise<Response<T>>;
-type Response<T> = {
-    status: number;
-    data: T;
-};
-
-type AxiosContext = {
-    api: MutableRefObject<AxiosInstance>;
-    create: Request;
-    get: Request;
-};
-
-export const AxiosContext = createContext<AxiosContext>({} as AxiosContext);
+export const AxiosContext = createContext<IAxiosContext>({} as IAxiosContext);
 export const AxiosInstanceProvider = ({
     children
 }: {
@@ -31,13 +19,14 @@ export const AxiosInstanceProvider = ({
     const api = useRef<AxiosInstance>(
         axios.create({
             baseURL: "http://localhost:8002",
-            withCredentials: true
+            withCredentials: false
         })
     );
 
     api.current.interceptors.request.use((config) => {
-        const csrf_token = getCookie("csrf_token");
-        config.headers["csrf_token"] = csrf_token;
+        const token = localStorage.getItem("token");
+        if (token === null) return config;
+        config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
         return config;
     });
 
@@ -49,9 +38,9 @@ export const AxiosInstanceProvider = ({
         return res;
     };
 
-    const create: Request = <T,>(
+    const create: Request = <T, U>(
         args?: CreateArgs<T>
-    ): Promise<Response<T>> => {
+    ): Promise<AxiosResponse<U>> => {
         const res = api.current.request({
             method: "POST",
             data: {

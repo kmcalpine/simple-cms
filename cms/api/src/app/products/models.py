@@ -83,3 +83,30 @@ class ProductUpdate(CustomBase):
     price: Optional[float]
     images: Optional[List[ProductImage]]
     tags: Optional[List[ProductTag]]
+
+
+class ProductInfoResponse(CustomBase):
+    id: Optional[PrimaryKey]
+    product_id: int
+    name: str
+    description: str
+    price: float
+
+
+class ProductImagesResponse(CustomBase):
+    id: Optional[PrimaryKey]
+    url: str
+    tag: str
+
+
+class ProductTagsResponse(CustomBase):
+    id: Optional[PrimaryKey]
+    tag: str
+
+
+class ProductResponse(CustomBase):
+    id: PrimaryKey
+    user_id: int
+    info: List[ProductInfoResponse]
+    images: List[ProductImagesResponse]
+    tags: List[ProductTagsResponse]

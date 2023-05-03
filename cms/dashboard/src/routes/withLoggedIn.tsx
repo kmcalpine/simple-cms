@@ -3,7 +3,6 @@ import { withCondition } from "./withCondition";
 import { useAuth } from "../context/Auth";
 
 export const withLoggedIn = (Component: FunctionComponent) => {
-    console.log(useAuth().authenticated);
     return withCondition(Component, useAuth().authenticated, "/login");
 };
 

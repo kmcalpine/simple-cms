@@ -2,7 +2,6 @@ import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
 import styled from "styled-components";
 import React, { useState, useCallback } from "react";
-import { useAxios } from "../../../hooks/useAxios";
 import { device } from "../../../utils/breakpoints";
 import { useAuth } from "../../../context/Auth";
 import { useNavigate } from "react-router-dom";
@@ -12,15 +11,7 @@ interface FormData {
     password: string;
 }
 
-const Title = styled.div`
-    color: var(--theme-elevation-1000);
-    font-size: 40px;
-    margin-bottom: 40px;
-    font-weight: bold;
-`;
-
 const Form = styled.form`
-    width: 100%;
     max-width: 500px;
     margin-top: auto;
     margin-bottom: auto;

@@ -1,24 +1,9 @@
-import React, {
-    createContext,
-    useContext,
-    useCallback,
-    useState,
-    useEffect
-} from "react";
+import React, { createContext, useContext } from "react";
 import { AxiosContext } from "../Axios";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { IAuthContext, LoginArgs, LoginResponse } from "../../types/auth";
 
-type Login = (args: { email: string; password: string }) => Promise<any>;
-
-type Logout = () => Promise<void>;
-
-type AuthContext = {
-    authenticated: boolean;
-    login: Login;
-    logout: Logout;
-};
-
-const Context = createContext({} as AuthContext);
+const Context = createContext({} as IAuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     children
@@ -27,26 +12,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         "authenticated",
         false
     );
+    const [token, setToken] = useLocalStorage<string>("token", "");
 
     const { create } = useContext(AxiosContext);
 
-    const login = useCallback<Login>(async (args) => {
+    const login = async (args: LoginArgs) => {
         try {
-            const createArgs = {
+            const loginArgs = {
                 data: { ...args },
                 slug: "auth/login"
             };
-            await create(createArgs).then((res) => {
+            await create<LoginArgs, LoginResponse>(loginArgs).then((res) => {
                 if (res.status === 200) {
                     setAuthenticated(true);
+                    setToken(res.data.token);
                 }
             });
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
+        } catch (error) {}
+    };
 
-    const logout = useCallback<Logout>(async () => {
+    const logout = async () => {
         try {
             const createArgs = {
                 data: {},
@@ -60,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         } catch (error) {
             console.log(error);
         }
-    }, []);
+    };
 
     return (
         <Context.Provider
@@ -75,6 +60,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 };
 
-type UseAuth<T = string> = () => AuthContext;
+type UseAuth<T = string> = () => IAuthContext;
 
 export const useAuth: UseAuth = () => useContext(Context);

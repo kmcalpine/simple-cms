@@ -35,10 +35,11 @@ def create_tables(engine):
 
 def init_database(engine, url=str(DATABASE_URL)):
     # testing
+    """
     if TESTING:
         if database_exists(url):
             drop_database(url)
-
+    """
     if not database_exists(url):
         create_database(url)
 

@@ -6,7 +6,6 @@ import { createContext } from "react";
 import { useThemeMode } from "./hooks/useThemeMode";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./routes/Routes";
-import { UserProvider } from "./context/User";
 import { AuthProvider } from "./context/Auth";
 
 interface ThemesMap {

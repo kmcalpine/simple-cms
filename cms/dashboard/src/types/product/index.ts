@@ -1,5 +1,7 @@
 export interface Product {
-    info: ProductInfo;
+    name: string;
+    description: string;
+    price: number;
     images: ProductImage[];
     tags: ProductTag[];
 }

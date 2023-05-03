@@ -20,6 +20,7 @@ const LogoText = styled.div`
 `;
 
 const StyledSideNav = styled.div`
+    z-index: 100;
     display: flex;
     width: 100%;
     height: 100%;

@@ -3,6 +3,8 @@ import styled, { StyledComponent } from "styled-components";
 export const Layout = styled.div`
     height: 100%;
     width: 100%;
+    display flex;
+    flex-direction: row;
 `;
 export const Title = styled.h1`
     font-size: 3rem;
