@@ -4,13 +4,11 @@ export const StyledTag = styled.div`
     display: flex;
     height: 50px;
     border-radius: 3rem;
-    background-color: var(--theme-elevation-50);
-    border: 1px solid var(--theme-elevation-200);
+    background-color: var(--theme-success-300);
     padding: 0 1rem;
     margin: 0 0.75rem 0.75rem 0;
     font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--theme-elevation-1000);
+    color: var(--theme-success-900);
     text-align: center;
 `;
 
@@ -64,13 +62,14 @@ export const AddTag = styled.button`
 
 export const DelTagButton = styled.button`
     margin: auto 0 auto 0.5rem;
-    background-color: var(--theme-error-500);
+    background-color: white;
     height: 1rem;
     width: 1rem;
     border-radius: 1rem;
     outline: none;
     border: none;
-    color: var(--theme-elevation-0);
+    display: flex;
+    color: black;
     &:hover {
         cursor: pointer;
     }

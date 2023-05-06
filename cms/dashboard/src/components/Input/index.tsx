@@ -26,8 +26,8 @@ const InputTitle = styled.div`
 const StyledTextArea = styled.textarea`
     display: flex;
     border: none;
-    background-color: var(--theme-input-bg);
-    border: solid 1px #3c3c3c;
+    background-color: var(--theme-elevation-50);
+    border: solid 1px var(--theme-elevation-200);
     font-size: calc(20px * 0.75);
     color: var(--theme-elevation-800);
     height: 15rem;
@@ -36,7 +36,7 @@ const StyledTextArea = styled.textarea`
         outline: none;
     }
     &:hover {
-        border: solid 1px #5c5c5c;
+        border: solid 1px var(--theme-elevation-300);
     }
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
@@ -51,8 +51,8 @@ const StyledTextArea = styled.textarea`
 const StyledInput = styled.input`
     display: flex;
     border: none;
-    background-color: var(--theme-elevation-0);
-    border: solid 1px var(--theme-elevation-300);
+    background-color: var(--theme-elevation-50);
+    border: solid 1px var(--theme-elevation-200);
     font-size: calc(20px * 0.75);
     color: var(--theme-elevation-800);
     height: 50px;
@@ -63,7 +63,7 @@ const StyledInput = styled.input`
         outline: none;
     }
     &:hover {
-        border: solid 1px var(--theme-elevation-400);
+        border: solid 1px var(--theme-elevation-300);
     }
     &:-webkit-autofill,
     &:-webkit-autofill:hover,

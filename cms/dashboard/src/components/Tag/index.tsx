@@ -14,7 +14,9 @@ const TagItem = ({ tag }: { tag: ITag }) => {
                     e.preventDefault();
                     delTag(tag.id);
                 }}
-            ></DelTagButton>
+            >
+                <span>x</span>
+            </DelTagButton>
         </StyledTag>
     );
 };
